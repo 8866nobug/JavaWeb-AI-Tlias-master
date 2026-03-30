@@ -1,0 +1,6 @@
+# 配置阿里云OSS
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: javaweb-ai-tlias-carrot
+    region: cn-beijing

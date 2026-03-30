@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: tlias-web-management
+  datasource:
+    url: jdbc:mysql://localhost:3306/tlias?useUnicode=true&characterEncoding=utf-8
+    username: <your username>
+    password: <your password>
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 15MB
+
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
+
+# 配置阿里云OSS
+aliyun:
+  oss:
+    endpoint: https://oss-cn-beijing.aliyuncs.com
+    bucketName: javaweb-ai-tlias-carrot
+    region: cn-beijing
+
+tokenFilter:
+  loginPath: /login

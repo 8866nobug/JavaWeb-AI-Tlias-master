@@ -1,0 +1,19 @@
+package com.carrot.pojo.Param;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class StudentQueryParam {
+    private Integer page = 1; //页码
+    private Integer pageSize = 10; //每页展示记录数
+    private String name; //姓名
+    private Integer degree; //学历
+    private Integer clazzId; // 班级ID
+
+}

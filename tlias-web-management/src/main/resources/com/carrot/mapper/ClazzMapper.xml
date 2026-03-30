@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carrot.mapper.ClazzMapper">
+    <insert id="insert">
+        INSERT INTO clazz(name, room, begin_date, end_date, master_id, subject, create_time, update_time)
+        VALUES (#{name}, #{room}, #{beginDate}, #{endDate}, #{masterId}, #{subject}, #{createTime}, #{updateTime})
+    </insert>
+    <update id="update">
+        UPDATE clazz
+        <set>
+            <if test="name != null and name != '' ">
+                name = #{name},
+            </if>
+            <if test="room != null and room != '' ">
+                room = #{room},
+            </if>
+            <if test="beginDate != null">
+                begin_date = #{beginDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+            <if test="masterId != null">
+                master_id = #{masterId},
+            </if>
+            <if test="subject != null">
+                subject = #{subject},
+            </if>
+        </set>
+            where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM clazz
+        WHERE id = #{id}
+    </delete>
+
+
+    <select id="list" resultType="com.carrot.pojo.Clazz">
+
+        SELECT
+        c.id,
+        c.name,
+        c.room,
+        c.begin_date,
+        c.end_date,
+        c.master_id,
+        e.name AS master_name,
+        c.create_time,
+        c.update_time,
+        case
+        when NOW() > c.begin_date and c.end_date > NOW() THEN '在读'
+        when c.begin_date > NOW() THEN '未开始'
+        else '已结束'
+        end AS status
+
+        FROM clazz c
+        LEFT JOIN emp e ON c.master_id = e.id
+        <where>
+            <if test="name != null and name != ''">
+                AND c.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="begin != null and end != null">
+                AND c.end_date BETWEEN #{begin} AND #{end}
+            </if>
+        </where>
+
+
+    </select>
+
+    <select id="getInfoById" resultType="com.carrot.pojo.Clazz">
+        SELECT id,
+               name,
+               room,
+               begin_date,
+               end_date,
+               master_id,
+               subject,
+               create_time,
+               update_time
+        from clazz
+        where id = #{id}
+    </select>
+    <select id="allList" resultType="com.carrot.pojo.Clazz">
+        SELECT id,
+               name,
+               room,
+               begin_date,
+               end_date,
+               master_id,
+               subject,
+               create_time,
+               update_time
+        from clazz
+    </select>
+
+</mapper>
+
